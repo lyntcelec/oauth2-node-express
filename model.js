@@ -22,13 +22,12 @@ const db = { // Here is a fast overview of what your db model should look like
   },
 }
 
-// const DebugControl = require('../../../Downloads/oauth-example/auth/utilities/debug.js')
+// const DebugControl = require('../utilities/debug.js')
 
 module.exports = {
   getClient: function (clientId, clientSecret) {
-    console.log("getClient")
     // query db for details with client
-    console.log({
+    log({
       title: 'Get Client',
       parameters: [
         { name: 'clientId', value: clientId },
@@ -39,7 +38,7 @@ module.exports = {
       clientId: clientId,
       clientSecret: clientSecret,
       grants: ['authorization_code', 'refresh_token'],
-      redirectUris: ['http://localhost:3030/client/app'],
+      redirectUris: ['http://localhost:5000/app'],
     }
     return new Promise(resolve => {
       resolve(db.client)
@@ -56,9 +55,8 @@ module.exports = {
   //
   // },
   saveToken: (token, client, user) => {
-    console.log("saveToken")
     /* This is where you insert the token into the database */
-    console.log({
+    log({
       title: 'Save Token',
       parameters: [
         { name: 'token', value: token },
@@ -78,9 +76,8 @@ module.exports = {
 
   },
   getAccessToken: token => {
-    console.log("getAccessToken")
     /* This is where you select the token from the database where the code matches */
-    console.log({
+    log({
       title: 'Get Access Token',
       parameters: [
         { name: 'token', value: token },
@@ -90,21 +87,19 @@ module.exports = {
     return new Promise(resolve => resolve(db.token))
   },
   getRefreshToken: token => {
-    console.log("getRefreshToken")
     /* Retrieves the token from the database */
-    console.log({
+    log({
       title: 'Get Refresh Token',
       parameters: [
         { name: 'token', value: token },
       ],
     })
-    DebugControl.log.variable({ name: 'db.token', value: db.token })
+    // DebugControl.log.variable({ name: 'db.token', value: db.token })
     return new Promise(resolve => resolve(db.token))
   },
   revokeToken: token => {
-    console.log("revokeToken")
     /* Delete the token from the database */
-    console.log({
+    log({
       title: 'Revoke Token',
       parameters: [
         { name: 'token', value: token },
@@ -114,7 +109,6 @@ module.exports = {
     return new Promise(resolve => resolve(true))
   },
   generateAuthorizationCode: (client, user, scope) => {
-    console.log("generateAuthorizationCode")
     /* 
     For this to work, you are going have to hack this a little bit:
     1. navigate to the node_modules folder
@@ -133,7 +127,7 @@ module.exports = {
     };
     */
 
-   console.log({
+    log({
       title: 'Generate Authorization Code',
       parameters: [
         { name: 'client', value: client },
@@ -149,9 +143,8 @@ module.exports = {
     return code
   },
   saveAuthorizationCode: (code, client, user) => {
-    console.log("saveAuthorizationCode")
     /* This is where you store the access code data into the database */
-    console.log({
+    log({
       title: 'Save Authorization Code',
       parameters: [
         { name: 'code', value: code },
@@ -170,9 +163,8 @@ module.exports = {
     }, db.authorizationCode)))
   },
   getAuthorizationCode: authorizationCode => {
-    console.log("getAuthorizationCode")
     /* this is where we fetch the stored data from the code */
-    console.log({
+    log({
       title: 'Get Authorization code',
       parameters: [
         { name: 'authorizationCode', value: authorizationCode },
@@ -183,9 +175,8 @@ module.exports = {
     })
   },
   revokeAuthorizationCode: authorizationCode => {
-    console.log("revokeAuthorizationCode")
     /* This is where we delete codes */
-    console.log({
+    log({
       title: 'Revoke Authorization Code',
       parameters: [
         { name: 'authorizationCode', value: authorizationCode },
@@ -202,9 +193,8 @@ module.exports = {
     return new Promise(resolve => resolve(codeWasFoundAndDeleted))
   },
   verifyScope: (token, scope) => {
-    console.log("verifyScope")
     /* This is where we check to make sure the client has access to this scope */
-    console.log({
+    log({
       title: 'Verify Scope',
       parameters: [
         { name: 'token', value: token },
@@ -214,4 +204,9 @@ module.exports = {
     const userHasAccess = true  // return true if this user / client combo has access to this resource
     return new Promise(resolve => resolve(userHasAccess))
   }
+}
+
+function log({ title, parameters }) {
+  // DebugControl.log.functionName(title)
+  // DebugControl.log.parameters(parameters)
 }
