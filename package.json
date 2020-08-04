@@ -1,0 +1,25 @@
+{
+  "name": "oauth2-node-express",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lyntcelec/oauth2-node-express.git"
+  },
+  "author": "Li Nguyen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lyntcelec/oauth2-node-express/issues"
+  },
+  "homepage": "https://github.com/lyntcelec/oauth2-node-express#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-oauth-server": "^2.0.0",
+    "nodemon": "^2.0.4"
+  }
+}
